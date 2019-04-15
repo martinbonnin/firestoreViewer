@@ -1,0 +1,9 @@
+/.idea/
+/build/
+/.gradle/
+/src/main/webapp/*
+!/src/main/webapp/WEB-INF/
+*.iml
+/src/main/resources/secret.json
+/src/main/resources/config.json
+/out
