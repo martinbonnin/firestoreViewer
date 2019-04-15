@@ -19,6 +19,15 @@ import javax.servlet.http.HttpServletResponse
 
 class MainServlet : HttpServlet() {
 
+    val options = FirebaseOptions.Builder()
+            .setCredentials(GoogleCredentials.getApplicationDefault())
+            .setDatabaseUrl("https://android-makers-2019.firebaseio.com")
+            .build()
+
+    init {
+        FirebaseApp.initializeApp(options)
+    }
+
     data class ScheduleSlotKt(
             val endDate: String = "",
             val sessionId: String = "",
@@ -28,7 +37,6 @@ class MainServlet : HttpServlet() {
 
     override fun service(req: HttpServletRequest, resp: HttpServletResponse) {
         System.out.println("service=${req.servletPath} pathInfo=${req.pathInfo}")
-
 
         resp.status = 200
         resp.contentType = "application/json"
@@ -44,12 +52,6 @@ class MainServlet : HttpServlet() {
         }
 
         fun getScheduleSlots(): String {
-            val options = FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.getApplicationDefault())
-                    .setDatabaseUrl("https://android-makers-2019.firebaseio.com")
-                    .build()
-
-            FirebaseApp.initializeApp(options)
             val db = FirestoreClient.getFirestore()
 
             val result1 = db.collection("schedule").document("2019-04-23").get().get()
